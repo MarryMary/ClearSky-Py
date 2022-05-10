@@ -1,2 +1,2 @@
 # ClearSky-Py
-The simply python web framework
+PHPからの乗り換えを考慮したPython用WebフレームワークClearSky

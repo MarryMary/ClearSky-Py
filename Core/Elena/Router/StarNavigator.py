@@ -1,4 +1,5 @@
 import re
+
 def http404(env, start_response):
     start_response('404 Not Found', [('Content-type', 'text/plain; charset=utf-8')])
     return [b'404 Not Found']
@@ -78,3 +79,10 @@ class StarNavigator:
             if method == r['method']:
                 return r['callback'], url_vars
         return error_callback, {}
+
+    @classmethod
+    def __call__(cls, env, start_response):
+        method = env['REQUEST_METHOD'].upper()
+        route = env['PATH_INFO'] or '/'
+        callback, kwargs = cls.match(method, route)
+        return callback(env, start_response, **kwargs)

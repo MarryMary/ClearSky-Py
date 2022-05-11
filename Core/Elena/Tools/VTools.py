@@ -13,10 +13,10 @@ def dict_key_exists(key, target_dict: dict):
         return False
 
 def array_key_exists(key, target_array):
-    if(type(target_array) == "dict"):
+    if(type(target_array) is dict):
         return dict_key_exists(key, target_array)
-    elif(type(target_array) == "list"):
-        if(type(key) == int):
+    elif(type(target_array) is list):
+        if(type(key) is int):
             return list_key_exists(key, target_array)
         else:
             #exception throw here

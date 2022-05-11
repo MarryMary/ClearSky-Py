@@ -46,13 +46,13 @@ class Analyzer:
         self.__template = ""
         for ORTHIASYSLINE in ORTHIASYSTEMPLATE:
             ORTHIASYSPATTERN = r'/\{{.+?\}}/'
-            ORTHIASYSVALIABLE = re.match(PRTHOASYSPATTERN, ORTHIASYSLINE)
+            ORTHIASYSVALIABLE = re.match(ORTHIASYSPATTERN, ORTHIASYSLINE)
             for ORTHIASYSVALS in ORTHIASYSVALIABLE:
                 for ORTHIASYSV in ORTHIASYSVALS:
                     if(self.__parsemode == "phper"):
                         ORTHIAVAL_TRIMED = ORTHIASYSV.strip().lstrip("{{").rstrip("}}").strip().lstrip("$")
                         ORTHIAVAL_UNTRIMED = ORTHIAVAL_TRIMED
-                        ORTHIAVAL_TRIMED = val_trimed.split("->")
+                        ORTHIAVAL_TRIMED = ORTHIAVAL_TRIMED.split("->")
                     elif(self.__parsemode == "pythonista"):
                         ORTHIAVAL_TRIMED = ORTHIASYSV.strip().lstrip("{{").rstrip("}}").strip()
                         ORTHIAVAL_UNTRIMED = ORTHIAVAL_TRIMED
@@ -64,9 +64,9 @@ class Analyzer:
                             ORTHIASYSLINE = ORTHIASYSLINE.replace(ORTHIASYSV, ORTHIAFUNCTIONINSTANCE.ArrayAnalyzer(exec("{}".format(ORTHIAVAL_TRIMED[0], ORTHIAVAL_UNTRIMED))))
 
                         else:
-                            if(type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]]) == "list" or type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]]) == "dict"):
+                            if(type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]]) is list or type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]]) == "dict"):
                                 ORTHIAVARDUMPMANAGEMENT = type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]])+"("+len(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]])+")"
-                                if(type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]]) == "list"):
+                                if(type(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]]) is list):
                                     for(ORTHIASYSTEMLISTORDICTK, ORTHIASYSTEMLISTORDICTV in enumerate(ORTHIASYSNS[ORTHIAVAL_TRIMED[0]])):
                                         ORTHIAVARDUMPMANAGEMENT = ORTHIAVARDUMPMANAGEMENT+"<br>"+ORTHIASYSTEMLISTORDICTK+" => "+ORTHIASYSTEMLISTORDICTV
                                     ORTHIASYSLINE = ORTHIAVARDUMPMANAGEMENT

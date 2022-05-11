@@ -9,9 +9,6 @@ def http404(env, start_response):
 def http405(env, start_response):
     return Provide.echo(start_response, Provide.Viewer("NotAllowed", True), 405)
 
-def DebuggingFunction(env, start_response, message: str = "URI Pattern was not matched."):
-    return Provide.echo(start_response, message, 200)
-
 class StarNavigator:
     routes = []
 
@@ -71,14 +68,14 @@ class StarNavigator:
 
     @classmethod
     def match(cls, method, route):
-        callback = DebuggingFunction
+        callback = http404
         for r in cls.routes:
             if GateWay.RoutingJudgement(r['route'], route):
                 callback = http405
                 if method == r['method']:
-                    callback = r['callback']
+                    callback = r['function']
                 elif r['method'] == '*':
-                    callback = r['callback']
+                    callback = r['function']
             else:
                 callback = http404
         return callback

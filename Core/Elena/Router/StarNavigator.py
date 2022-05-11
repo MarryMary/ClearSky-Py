@@ -1,5 +1,6 @@
 import re
 from Core.Elena.Executer.Provide import Provide
+from Core.Elena.Router.GateWay import GateWay
 
 def http404(env, start_response):
     return Provide.echo(start_response, Provide.Viewer("NotFound", True), 404)
@@ -7,6 +8,9 @@ def http404(env, start_response):
 
 def http405(env, start_response):
     return Provide.echo(start_response, Provide.Viewer("NotAllowed", True), 405)
+
+def DebuggingFunction(env, start_response, message: str = "URI Pattern was not matched."):
+    return Provide.echo(start_response, message, 200)
 
 class StarNavigator:
     routes = []
@@ -67,25 +71,22 @@ class StarNavigator:
 
     @classmethod
     def match(cls, method, route):
-        error_callback = http404
+        callback = DebuggingFunction
         for r in cls.routes:
-            matched = r['route_compiled'].match(route)
-            print(matched)
-
-            if not matched:
-                continue
-
-            error_callback = http405
-            url_vars = matched.groupdict()
-            if method == r['method']:
-                return r['callback'], url_vars
-            elif r['method'] == '*':
-                return r['callback'], url_vars
-        return error_callback, {}
+            if GateWay.RoutingJudgement(r['route'], route):
+                callback = http405
+                if method == r['method']:
+                    callback = r['callback']
+                elif r['method'] == '*':
+                    callback = r['callback']
+            else:
+                callback = http404
+        return callback
 
     @classmethod
     def __call__(cls, env, start_response):
         method = env['REQUEST_METHOD'].upper()
         route = env['PATH_INFO'] or '/'
-        callback, kwargs = cls.match(method, route)
-        return callback(env, start_response, **kwargs)
+        import Web.Settings.RoutingSettings
+        callback = cls.match(method, route)
+        return callback(env, start_response)

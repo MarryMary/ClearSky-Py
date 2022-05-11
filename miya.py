@@ -7,6 +7,6 @@ if(sys.argv[1]):
         if(command[0].lower() == "system"):
             if(command[1].lower() == "start"):
                 port = 8000
-                if(sys.argv[2] and sys.argv[2].isdigit):
+                if(2 in sys.argv and sys.argv[2].isdigit):
                     port = int(sys.argv[2])
                 index.SystemStartTrigger(port)

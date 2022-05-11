@@ -1,13 +1,13 @@
 import re
+from Core.Elena.Executer.Executer import Executer
 
 def http404(env, start_response):
-    start_response('404 Not Found', [('Content-type', 'text/plain; charset=utf-8')])
-    return [b'404 Not Found']
+    return Executer.echo(env, start_response, Executer.Reader("NotFound", True), 404)
+
 
 
 def http405(env, start_response):
-    start_response('405 Method Not Allowed', [('Content-type', 'text/plain; charset=utf-8')])
-    return [b'405 Method Not Allowed']
+    return Executer.echo(env, start_response, Executer.Reader("NotAllowed", True), 404)
 
 class StarNavigator:
     routes = []

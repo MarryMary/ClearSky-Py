@@ -1,5 +1,4 @@
 from wsgiref.simple_server import make_server
-#from Web.Settings import RoutingSettings
 from Core.Elena.Router.StarNavigator import StarNavigator
 
 class index:

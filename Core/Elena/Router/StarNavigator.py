@@ -1,13 +1,12 @@
 import re
-from Core.Elena.Executer.Executer import Executer
+from Core.Elena.Executer.Provide import Executer
 
 def http404(env, start_response):
-    return Executer.echo(env, start_response, Executer.Reader("NotFound", True), 404)
-
+    return Executer.echo(start_response, Executer.Reader("NotFound", True), 404)
 
 
 def http405(env, start_response):
-    return Executer.echo(env, start_response, Executer.Reader("NotAllowed", True), 404)
+    return Executer.echo(start_response, Executer.Reader("NotAllowed", True), 405)
 
 class StarNavigator:
     routes = []
@@ -77,6 +76,8 @@ class StarNavigator:
             error_callback = http405
             url_vars = matched.groupdict()
             if method == r['method']:
+                return r['callback'], url_vars
+            elif r['method'] == '*':
                 return r['callback'], url_vars
         return error_callback, {}
 

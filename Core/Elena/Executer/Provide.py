@@ -1,15 +1,20 @@
 import json
-class Executer:
+from Web.Programs.Controllers import *
+class Provide:
     @staticmethod
-    def Reader(path: str, IsIrregular: bool = False):
+    def Viewer(path: str, IsIrregular: bool = False):
         if(IsIrregular):
             clsk_docroot = "Web/Templates/IrregularCase/" + path.strip() + ".html"
         else:
-            clsk_docroot = "../../../Web/Templates/Normal/" + path.strip() + ".html"
+            clsk_docroot = "Web/Templates/Normal/" + path.strip() + ".html"
         template = ""
         with open(clsk_docroot, "r", encoding="utf-8") as file:
             template = file.read()
         return template
+
+    @staticmethod
+    def Reader():
+        pass
 
     @staticmethod
     def echo(start_response, string: str, status: int = 200, header: list = [('Content-type', 'text/html; charset=utf-8')]):
@@ -19,7 +24,15 @@ class Executer:
         return [string.encode()]
 
     @staticmethod
+    def Controller(controller_name: str, function_name: str):
+        pass
+
+    @staticmethod
     def WebAPI(start_response, data: dict, status: int = 200):
+        pass
+
+    @staticmethod
+    def JumpTo(to: str = "/"):
         pass
 
     def StatusCodeJudgement(self, status: int):

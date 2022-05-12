@@ -1,2 +1,5 @@
 # ClearSky-Py
-PHPからの乗り換えを考慮したPython用WebフレームワークClearSky
+Archived
+
+# 理由
+本フレームワークのリポジトリは[ClearSkyPy](https://github.com/ClearSkyFW/ClearSkyPy)へ移転したため、本リポジトリはアーカイブ化されました。
